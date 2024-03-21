@@ -16,10 +16,19 @@ class MainActivity : AppCompatActivity() {
         // Retrieve ViewModel
         val viewModel = ViewModelProvider(this)[DiceViewModel::class.java]
 
+
+        val fragment = DiceFragment()
+        viewModel.setSide(6)
+
+
         // Fragment created using factory method and added dynamically using fragmentTransaction
         // argument is the number of sides the die will have
         supportFragmentManager.beginTransaction()
-            .add(R.id.diceFragmentContainer, DiceFragment.newInstance(6))
+            .add(R.id.diceFragmentContainer, fragment)
             .commit()
+
+        viewModel.getRoll().observe(this){
+            numberDisplay.text = it.toString()
+        }
     }
 }

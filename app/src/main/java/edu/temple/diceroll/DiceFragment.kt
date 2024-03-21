@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
-const val DIE_SIDES = "dIcE_SiDeS"
+//const val DIE_SIDES = "dIcE_SiDeS"
 
 class DiceFragment : Fragment() {
     private var sides: Int? = null
@@ -23,9 +23,10 @@ class DiceFragment : Fragment() {
 
         // Activity-scoped ViewModel initialization
         viewModel = ViewModelProvider(requireActivity())[DiceViewModel::class.java]
-        arguments?.let {
+        sides = viewModel.getSide().value
+        /*arguments?.let {
             sides = it.getInt(DIE_SIDES)
-        }
+        }*/
     }
 
     override fun onCreateView(
@@ -36,12 +37,12 @@ class DiceFragment : Fragment() {
             findViewById<Button>(R.id.rollButton).setOnClickListener {
 
                 // Generate random number
-                (Random.nextInt(sides!!) + 1).toString()
+                viewModel.setRoll(Random.nextInt(sides!!) + 1)
             }
         }
     }
 
-    companion object {
+    /*companion object {
 
         @JvmStatic
         fun newInstance(sides: Int) =
@@ -50,5 +51,5 @@ class DiceFragment : Fragment() {
                     putInt(DIE_SIDES, sides)
                 }
             }
-    }
+    }*/
 }
